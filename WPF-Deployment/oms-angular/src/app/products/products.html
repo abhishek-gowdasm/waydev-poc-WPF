@@ -1,0 +1,222 @@
+<div class="products-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Products</h1>
+    <button mat-raised-button color="primary" (click)="addProduct()">
+      <mat-icon>add</mat-icon>
+      New Product
+    </button>
+  </div>
+
+  <!-- Simple Stats -->
+  <div class="stats-row">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ totalProducts }}</div>
+        <div class="stat-label">Total Products</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ totalCategories }}</div>
+        <div class="stat-label">Categories</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">${{ totalValue | number:'1.0-0' }}</div>
+        <div class="stat-label">Total Value</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ lowStockProducts }}</div>
+        <div class="stat-label">Low Stock</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Product Form -->
+  <mat-card *ngIf="showForm" class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ editingProduct ? 'Edit Product' : 'Add New Product' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Product Name*</mat-label>
+            <input matInput formControlName="ProductName" placeholder="Enter product name" required>
+            <mat-error *ngIf="productForm.get('ProductName')?.hasError('required')">
+              Product name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Category ID*</mat-label>
+            <input matInput type="number" formControlName="CategoryID" placeholder="Enter category ID" required>
+            <mat-hint>Available: 1, 2, 3, 5, 7, 8, 10</mat-hint>
+            <mat-error *ngIf="productForm.get('CategoryID')?.hasError('required')">
+              Category ID is required
+            </mat-error>
+            <mat-error *ngIf="productForm.get('CategoryID')?.hasError('min')">
+              Category ID must be greater than 0
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Supplier ID*</mat-label>
+            <input matInput type="number" formControlName="SupplierID" placeholder="Enter supplier ID" required>
+            <mat-hint>Available: 1, 2, 3</mat-hint>
+            <mat-error *ngIf="productForm.get('SupplierID')?.hasError('required')">
+              Supplier ID is required
+            </mat-error>
+            <mat-error *ngIf="productForm.get('SupplierID')?.hasError('min')">
+              Supplier ID must be greater than 0
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Quantity Per Unit*</mat-label>
+            <input matInput formControlName="QuantityPerUnit" placeholder="e.g., 24 bottles" required>
+            <mat-error *ngIf="productForm.get('QuantityPerUnit')?.hasError('required')">
+              Quantity per unit is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Unit Price*</mat-label>
+            <input matInput type="number" step="0.01" min="0" formControlName="UnitPrice" placeholder="0.00" required>
+            <span matPrefix>$&nbsp;</span>
+            <mat-error *ngIf="productForm.get('UnitPrice')?.hasError('required')">
+              Unit price is required
+            </mat-error>
+            <mat-error *ngIf="productForm.get('UnitPrice')?.hasError('min')">
+              Price must be greater than 0
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Units In Stock</mat-label>
+            <input matInput type="number" min="0" formControlName="UnitsInStock" placeholder="0">
+            <mat-error *ngIf="productForm.get('UnitsInStock')?.hasError('min')">
+              Stock must be positive
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Units On Order</mat-label>
+            <input matInput type="number" min="0" formControlName="UnitsOnOrder" placeholder="0">
+            <mat-error *ngIf="productForm.get('UnitsOnOrder')?.hasError('min')">
+              Order quantity must be positive
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Reorder Level</mat-label>
+            <input matInput type="number" min="0" formControlName="ReorderLevel" placeholder="0">
+            <mat-error *ngIf="productForm.get('ReorderLevel')?.hasError('min')">
+              Reorder level must be positive
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-checkbox formControlName="Discontinued">
+            Discontinued
+          </mat-checkbox>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancelForm()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">
+            {{ editingProduct ? 'Update' : 'Add' }} Product
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Products Table -->
+  <mat-card class="table-card">
+    <mat-card-header>
+      <!-- <mat-card-title>Products List</mat-card-title> -->
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Products</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by name, category...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-container">
+        <mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="50"></mat-progress-spinner>
+        
+        <table mat-table [dataSource]="dataSource" matSort class="products-table">
+          <!-- Product ID Column -->
+          <ng-container matColumnDef="productID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let product">{{ product.ProductID }}</td>
+          </ng-container>
+
+          <!-- Product Name Column -->
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</th>
+            <td mat-cell *matCellDef="let product">{{ product.ProductName }}</td>
+          </ng-container>
+
+          <!-- Category Name Column -->
+          <ng-container matColumnDef="categoryName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let product">
+              <span class="category-badge">{{ product.CategoryName }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Unit Price Column -->
+          <ng-container matColumnDef="unitPrice">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Price</th>
+            <td mat-cell *matCellDef="let product">${{ product.UnitPrice | number:'1.2-2' }}</td>
+          </ng-container>
+
+          <!-- Units in Stock Column -->
+          <ng-container matColumnDef="unitsInStock">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+            <td mat-cell *matCellDef="let product">
+              <span [class.low-stock]="(product.UnitsInStock || 0) < 10">{{ product.UnitsInStock || 0 }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Discontinued Column -->
+          <ng-container matColumnDef="discontinued">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let product">
+              <span class="status-badge" [class]="'status-' + (product.Discontinued ? 'discontinued' : 'active')">
+                {{ product.Discontinued ? 'Discontinued' : 'Active' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let product">
+              <div class="actions-cell">
+                <button mat-icon-button color="primary" (click)="editProduct(product)" matTooltip="Edit Product">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteProduct(product)" matTooltip="Delete Product">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

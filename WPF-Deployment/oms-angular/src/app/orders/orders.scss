@@ -1,0 +1,272 @@
+.orders-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+      margin: 0;
+      color: #333;
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+  }
+
+  // Override Material Design problematic styles
+  .mat-mdc-text-field-wrapper {
+    margin-left: 35px !important;
+    padding-right: 10px !important;
+  }
+
+  .mdc-text-field--outlined {
+    height: 50px;
+    overflow: visible;
+  }
+
+  // Add the specific DevTools CSS rules
+  .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+    padding-right: 0;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    width: 100%;
+    z-index: 0;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    height: auto;
+    flex: auto;
+    will-change: auto;
+  }
+
+  // Ensure proper alignment and spacing
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .stat-card {
+      text-align: center;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #1976d2;
+        margin-bottom: 8px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .form-card {
+    margin-bottom: 24px;
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+    }
+  }
+
+  .table-card {
+    .mat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 24px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+
+      .mat-card-title {
+        margin: 0;
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 16px;
+      }
+
+      .search-field {
+        width: 250px;
+        flex-shrink: 0;
+        margin-left: 35px;
+
+        @media (max-width: 768px) {
+          width: 100%;
+          margin-left: 0;
+        }
+
+        .mat-form-field-wrapper {
+          margin-bottom: 0;
+        }
+
+        
+        .mat-mdc-form-field-infix {
+          padding: 0;
+        }
+
+        .mat-mdc-form-field-subscript-wrapper {
+          display: none;
+        }
+      }
+    }
+
+    .table-container {
+      position: relative;
+      min-height: 300px;
+
+      mat-progress-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .orders-table {
+      width: 100%;
+
+      .mat-column-orderId {
+        width: 80px;
+      }
+
+      .mat-column-customerName {
+        width: 200px;
+      }
+
+      .mat-column-employeeName {
+        width: 150px;
+      }
+
+      .mat-column-orderDate {
+        width: 100px;
+      }
+
+      .mat-column-status {
+        width: 120px;
+      }
+
+      .mat-column-totalAmount {
+        width: 100px;
+      }
+
+      .mat-column-actions {
+        width: 80px;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &.status-pending {
+          background-color: #fff3cd;
+          color: #856404;
+        }
+
+        &.status-processing {
+          background-color: #cce5ff;
+          color: #004085;
+        }
+
+        &.status-shipped {
+          background-color: #d4edda;
+          color: #155724;
+        }
+
+        &.status-completed {
+          background-color: #d1ecf1;
+          color: #0c5460;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .orders-container {
+    padding: 16px;
+
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .table-card {
+      .mat-card-header {
+        .search-field {
+          width: 200px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .orders-container {
+    .table-card {
+      .mat-card-header {
+        .search-field {
+          width: 180px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .orders-container {
+    padding: 12px;
+
+    .header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+
+      h1 {
+        text-align: center;
+      }
+    }
+
+    .stats-row {
+      grid-template-columns: 1fr;
+    }
+
+    .form-card .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+} 

@@ -1,0 +1,205 @@
+<div class="orders-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Orders</h1>
+    <button mat-raised-button color="primary" (click)="addOrder()">
+      <mat-icon>add</mat-icon>
+      New Order
+    </button>
+  </div>
+
+  <!-- Simple Stats -->
+  <div class="stats-row">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ totalOrders }}</div>
+        <div class="stat-label">Total Orders</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ pendingOrders }}</div>
+        <div class="stat-label">Pending</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ completedOrders }}</div>
+        <div class="stat-label">Completed</div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">${{ totalRevenue | number:'1.0-0' }}</div>
+        <div class="stat-label">Total Revenue</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Order Form -->
+  <mat-card *ngIf="showForm" class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ editingOrder ? 'Edit Order' : 'New Order' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="orderForm" (ngSubmit)="saveOrder()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer</mat-label>
+            <mat-select formControlName="customerID">
+              <mat-option *ngFor="let customer of customers" [value]="customer.CustomerID">
+                {{ customer.CompanyName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Employee</mat-label>
+            <mat-select formControlName="employeeID">
+              <mat-option *ngFor="let employee of employees" [value]="employee.EmployeeID">
+                {{ employee.FirstName }} {{ employee.LastName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Order Date</mat-label>
+            <input matInput type="date" formControlName="orderDate">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Required Date</mat-label>
+            <input matInput type="date" formControlName="requiredDate">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Shipped Date</mat-label>
+            <input matInput type="date" formControlName="shippedDate">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship Via</mat-label>
+            <input matInput type="number" formControlName="shipVia" placeholder="Shipper ID">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Freight</mat-label>
+            <input matInput type="number" formControlName="freight" placeholder="0.00">
+            <span matPrefix>$&nbsp;</span>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship Name</mat-label>
+            <input matInput formControlName="shipName" placeholder="Recipient name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship Address</mat-label>
+            <textarea matInput formControlName="shipAddress" placeholder="Shipping address" rows="2"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship City</mat-label>
+            <input matInput formControlName="shipCity" placeholder="City">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship Region</mat-label>
+            <input matInput formControlName="shipRegion" placeholder="Region/State">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship Postal Code</mat-label>
+            <input matInput formControlName="shipPostalCode" placeholder="Postal code">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ship Country</mat-label>
+            <input matInput formControlName="shipCountry" placeholder="Country">
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancelForm()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="orderForm.invalid">
+            {{ editingOrder ? 'Update' : 'Create' }} Order
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Orders Table -->
+  <mat-card class="table-card">
+    <mat-card-header>
+      <!-- <mat-card-title>Orders</mat-card-title> -->
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search orders...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-container">
+        <mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="40"></mat-progress-spinner>
+        
+        <table mat-table [dataSource]="dataSource" matSort class="orders-table">
+          <!-- Order ID Column -->
+          <ng-container matColumnDef="OrderID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let order">#{{ order.OrderID }}</td>
+          </ng-container>
+
+          <!-- Customer Name Column -->
+          <ng-container matColumnDef="CustomerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+            <td mat-cell *matCellDef="let order">{{ order.CustomerName }}</td>
+          </ng-container>
+
+          <!-- Employee Name Column -->
+          <ng-container matColumnDef="EmployeeName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+            <td mat-cell *matCellDef="let order">{{ order.EmployeeName }}</td>
+          </ng-container>
+
+          <!-- Order Date Column -->
+          <ng-container matColumnDef="OrderDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let order">{{ order.OrderDate | date:'shortDate' }}</td>
+          </ng-container>
+
+          <!-- Total Amount Column -->
+          <ng-container matColumnDef="TotalAmount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+            <td mat-cell *matCellDef="let order">
+              <div class="amount-cell">
+                <span class="amount">${{ order.TotalAmount | number:'1.2-2' }}</span>
+                <div class="items">{{ order.ItemCount }} items</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let order">
+              <div class="actions-cell">
+                <button mat-icon-button color="primary" (click)="editOrder(order)" matTooltip="Edit Order">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteOrder(order)" matTooltip="Delete Order">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

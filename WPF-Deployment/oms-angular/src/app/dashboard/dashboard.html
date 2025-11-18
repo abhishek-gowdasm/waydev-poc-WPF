@@ -1,0 +1,229 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <!-- <h1> Dashboard</h1> -->
+    <!-- <p>Real-time insights into your business operations</p> -->
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading dashboard data...</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading" class="dashboard-content">
+    <!-- Key Metrics Cards -->
+    <div class="metrics-grid">
+      <mat-card class="metric-card">
+        <mat-card-content>
+          <div class="metric-icon orders">
+            <mat-icon>shopping_cart</mat-icon>
+          </div>
+          <div class="metric-info">
+            <h3>{{ getTotalOrders() }}</h3>
+            <p>Total Orders</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <mat-card-content>
+          <div class="metric-icon revenue">
+            <mat-icon>attach_money</mat-icon>
+          </div>
+          <div class="metric-info">
+            <h3>{{ formatCurrency(getTotalRevenue()) }}</h3>
+            <p>Total Revenue</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <mat-card-content>
+          <div class="metric-icon customers">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="metric-info">
+            <h3>{{ customers.length }}</h3>
+            <p>Total Customers</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <mat-card-content>
+          <div class="metric-icon products">
+            <mat-icon>inventory</mat-icon>
+          </div>
+          <div class="metric-info">
+            <h3>{{ products.length }}</h3>
+            <p>Total Products</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <mat-card-content>
+          <div class="metric-icon employees">
+            <mat-icon>badge</mat-icon>
+          </div>
+          <div class="metric-info">
+            <h3>{{ employees.length }}</h3>
+            <p>Total Employees</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <mat-card-content>
+          <div class="metric-icon pending">
+            <mat-icon>schedule</mat-icon>
+          </div>
+          <div class="metric-info">
+            <h3>{{ dashboardData?.PendingOrders || 0 }}</h3>
+            <p>Pending Orders</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-grid">
+      <!-- Orders Distribution Pie Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Orders Distribution</mat-card-title>
+          <mat-card-subtitle>Orders by status</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="ordersChartData"
+            [options]="ordersChartOptions"
+            [type]="'pie'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Products Performance Bar Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Products Performance</mat-card-title>
+          <mat-card-subtitle>Top products by revenue</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="productsChartData"
+            [options]="productsChartOptions"
+            [type]="'bar'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Country Orders Pie Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Orders by Countries (Top 10)</mat-card-title>
+          <mat-card-subtitle>Order distribution by countries</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="countryOrdersChartData"
+            [options]="countryOrdersChartOptions"
+            [type]="'pie'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Category Sales Pie Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Sales by Categories</mat-card-title>
+          <mat-card-subtitle>Revenue distribution by product categories</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="categorySalesChartData"
+            [options]="categorySalesChartOptions"
+            [type]="'pie'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Country Sales Bar Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Sales by Countries</mat-card-title>
+          <mat-card-subtitle>Revenue distribution by countries</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="countrySalesChartData"
+            [options]="countrySalesChartOptions"
+            [type]="'bar'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Customer Purchases Bar Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Purchases by Customers (Top 10)</mat-card-title>
+          <mat-card-subtitle>Top customers by purchase amount</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="customerPurchasesChartData"
+            [options]="customerPurchasesChartOptions"
+            [type]="'bar'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Employee Sales Bar Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Sales by Employee</mat-card-title>
+          <mat-card-subtitle>Revenue distribution by employees</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="employeeSalesChartData"
+            [options]="employeeSalesChartOptions"
+            [type]="'bar'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Customer Countries Pie Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Customers by Country</mat-card-title>
+          <mat-card-subtitle>Customer distribution by countries</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="customerCountriesChartData"
+            [options]="customerCountriesChartOptions"
+            [type]="'pie'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Product Categories Pie Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Products by Categories</mat-card-title>
+          <mat-card-subtitle>Product distribution by categories</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart
+            [data]="productCategoriesChartData"
+            [options]="productCategoriesChartOptions"
+            [type]="'pie'">
+          </canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div> 

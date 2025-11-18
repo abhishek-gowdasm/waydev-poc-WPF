@@ -1,0 +1,290 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme,  or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #e3f2fd;
+}
+
+/* Chart.js customizations */
+.chartjs-render-monitor {
+  border-radius: 4px;
+}
+
+/* Material Design overrides */
+.mat-mdc-card {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  background-color: #ffffff !important;
+}
+
+.mat-mdc-button {
+  border-radius: 4px !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+/* Light theme overrides */
+.mat-mdc-toolbar {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+.mat-mdc-sidenav {
+  background-color: #ffffff !important;
+}
+
+.mat-mdc-list-item {
+  color: #555555 !important;
+}
+
+.mat-mdc-list-item:hover {
+  background-color: #f5f5f5 !important;
+}
+
+.mat-mdc-list-item.active {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+}
+
+// Dark theme overrides
+.mat-mdc-card {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-card-header {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-card-content {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-table {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-header-row {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-row {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: #2d2d2d !important;
+}
+
+.mat-mdc-form-field {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-input-element {
+  color: #ffffff !important;
+}
+
+.mat-mdc-form-field-label {
+  color: #cccccc !important;
+}
+
+.mat-mdc-select-value {
+  color: #ffffff !important;
+}
+
+.mat-mdc-option {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-option:hover {
+  background-color: #2d2d2d !important;
+}
+
+.mat-mdc-button {
+  color: #ffffff !important;
+}
+
+.mat-mdc-raised-button {
+  background-color: #1976d2 !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-icon-button {
+  color: #ffffff !important;
+}
+
+.mat-mdc-paginator {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-sort-header {
+  color: #ffffff !important;
+}
+
+.mat-mdc-progress-spinner {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-snack-bar-container {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+// Light blue theme overrides
+.mat-mdc-card {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-card-header {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-card-content {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-table {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-header-row {
+  background-color: #bbdefb !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-row {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: #e3f2fd !important;
+}
+
+.mat-mdc-form-field {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-input-element {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-form-field-label {
+  color: #42a5f5 !important;
+}
+
+.mat-mdc-select-value {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-option {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-option:hover {
+  background-color: #e3f2fd !important;
+}
+
+.mat-mdc-button {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-raised-button {
+  background-color: #1976d2 !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-icon-button {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-paginator {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}
+
+.mat-mdc-sort-header {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-progress-spinner {
+  color: #1976d2 !important;
+}
+
+.mat-mdc-snack-bar-container {
+  background-color: #ffffff !important;
+  color: #1976d2 !important;
+}

@@ -1,0 +1,362 @@
+.customers-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  min-height: 100vh;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+      margin: 0;
+      color: #1976d2;
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .stat-card {
+      text-align: center;
+      transition: transform 0.2s ease;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(144, 202, 249, 0.3);
+      border-radius: 12px;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #1976d2;
+        margin-bottom: 8px;
+      }
+
+      .stat-label {
+        color: #42a5f5;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .form-card {
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(144, 202, 249, 0.3);
+    border-radius: 12px;
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+    }
+  }
+
+  .table-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(144, 202, 249, 0.3);
+    border-radius: 12px;
+
+    .mat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+
+      .search-field {
+        width: 250px;
+
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+      }
+    }
+
+    .table-container {
+      position: relative;
+      min-height: 300px;
+
+      mat-progress-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .customers-table {
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+
+      .mat-header-row {
+        background-color: rgba(187, 222, 251, 0.8);
+        
+        .mat-header-cell {
+          color: #1976d2;
+          font-weight: 600;
+          font-size: 0.9rem;
+          padding: 16px 12px;
+          border-bottom: 2px solid rgba(25, 118, 210, 0.2);
+        }
+      }
+
+      .mat-row {
+        transition: background-color 0.2s ease;
+        background-color: rgba(255, 255, 255, 0.95);
+        
+        &:hover {
+          background-color: rgba(227, 242, 253, 0.5);
+        }
+
+        .mat-cell {
+          padding: 16px 12px;
+          border-bottom: 1px solid rgba(25, 118, 210, 0.1);
+          vertical-align: top;
+          color: #1976d2;
+        }
+      }
+
+      // Company Column
+      .company-cell {
+        .company-name {
+          font-weight: 600;
+          color: #1976d2;
+          margin-bottom: 4px;
+        }
+        
+        .company-id {
+          font-size: 0.8rem;
+          color: #42a5f5;
+          font-family: 'Courier New', monospace;
+        }
+      }
+
+      // Contact Column
+      .contact-cell {
+        .contact-name {
+          font-weight: 500;
+          color: #1976d2;
+          margin-bottom: 4px;
+        }
+        
+        .contact-email {
+          font-size: 0.8rem;
+          color: #42a5f5;
+        }
+      }
+
+      // Title Column
+      .title-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: rgba(25, 118, 210, 0.1);
+        color: #1976d2;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(25, 118, 210, 0.2);
+      }
+
+      // Country Column
+      .country-cell {
+        .country-badge {
+          display: inline-block;
+          padding: 4px 8px;
+          background-color: rgba(156, 39, 176, 0.1);
+          color: #7b1fa2;
+          border-radius: 12px;
+          font-size: 0.8rem;
+          font-weight: 500;
+          margin-bottom: 4px;
+          border: 1px solid rgba(156, 39, 176, 0.2);
+        }
+        
+        .location {
+          font-size: 0.8rem;
+          color: #42a5f5;
+        }
+      }
+
+      // Phone Column
+      .phone-cell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        
+        .phone-icon {
+          font-size: 16px;
+          color: #28a745;
+        }
+        
+        span {
+          font-family: 'Courier New', monospace;
+          color: #1976d2;
+        }
+      }
+
+      // Orders Column
+      .orders-cell {
+        text-align: center;
+        
+        .orders-count {
+          display: block;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: #1976d2;
+        }
+        
+        .orders-label {
+          font-size: 0.7rem;
+          color: #42a5f5;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      // Revenue Column
+      .revenue-cell {
+        text-align: center;
+        
+        .revenue-amount {
+          display: block;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #28a745;
+          font-family: 'Courier New', monospace;
+        }
+        
+        .revenue-label {
+          font-size: 0.7rem;
+          color: #42a5f5;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      // Actions Column
+      .actions-cell {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        
+        button {
+          width: 36px;
+          height: 36px;
+          line-height: 36px;
+          
+          mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+
+      // Column widths
+      .mat-column-companyName {
+        width: 200px;
+      }
+
+      .mat-column-contactName {
+        width: 180px;
+      }
+
+      .mat-column-contactTitle {
+        width: 120px;
+      }
+
+      .mat-column-country {
+        width: 140px;
+      }
+
+      .mat-column-phone {
+        width: 140px;
+      }
+
+      .mat-column-totalOrders {
+        width: 80px;
+      }
+
+      .mat-column-totalSpent {
+        width: 100px;
+      }
+
+      .mat-column-actions {
+        width: 100px;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .customers-container {
+    padding: 16px;
+
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .customers-container {
+    padding: 12px;
+
+    .header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+
+      h1 {
+        text-align: center;
+      }
+    }
+
+    .stats-row {
+      grid-template-columns: 1fr;
+    }
+
+    .form-card .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .table-card .customers-table {
+      font-size: 0.8rem;
+      
+      .mat-cell, .mat-header-cell {
+        padding: 8px 4px;
+      }
+    }
+  }
+} 
