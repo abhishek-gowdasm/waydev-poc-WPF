@@ -153,6 +153,9 @@ namespace OrderManagementSystem.Data
 
             Console.WriteLine($"Successfully seeded {completedOrders.Count} completed order distributions with {orderDetails.Count} order details.");
             Console.WriteLine("Distribution completion dates range from 3 to 40 days ago.");
+
+            //Console.WriteLine($"Successfully seeded {completedOrders.Count} completed order distributions with {orderDetails.Count} order details.");
+            //Console.WriteLine("Distribution completion dates range from 3 to 40 days ago.");
         }
     }
 } 
