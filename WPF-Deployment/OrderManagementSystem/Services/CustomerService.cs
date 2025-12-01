@@ -240,5 +240,16 @@ namespace OrderManagementSystem.Services
                 TopCountryCount = topCountry?.Count ?? 0
             };
         }
+
+        //public async Task<bool> DeleteCustomerAsync(string id)
+        //{
+        //    var customer = await _unitOfWork.Repository<Customer>().GetByIdAsync(id);
+        //    if (customer == null)
+        //        return false;
+
+        //    _unitOfWork.Repository<Customer>().Delete(customer);
+        //    await _unitOfWork.SaveChangesAsync();
+        //    return true;
+        //}
     }
 } 
