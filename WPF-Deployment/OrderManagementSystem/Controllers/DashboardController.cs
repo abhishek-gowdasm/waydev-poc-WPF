@@ -169,5 +169,8 @@ namespace OrderManagementSystem.Controllers
             var productCategories = await _dashboardService.GetProductCategoriesAsync();
             return Ok(productCategories);
         }
+
+        //Dashboard controller changes
+        //Dummy commits
     }
 } 
