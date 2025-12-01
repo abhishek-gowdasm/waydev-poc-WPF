@@ -58,5 +58,20 @@ namespace OrderManagementSystem.Models
         public virtual ICollection<Order_Details> Order_Details { get; set; }
 
         public virtual Shipper Shippers { get; set; }
+
+        //for order 
+        //public DateTime? OrderDate { get; set; }
+
+        //public DateTime? RequiredDate { get; set; }
+
+        //public DateTime? ShippedDate { get; set; }
+
+        //public int? ShipVia { get; set; }
+
+        //[Column(TypeName = "money")]
+        //public decimal? Freight { get; set; }
+
+        //[StringLength(40)]
+        //public string ShipName { get; set; }
     }
 } 
