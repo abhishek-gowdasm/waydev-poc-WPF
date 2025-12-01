@@ -165,5 +165,13 @@ namespace OrderManagementSystem.Controllers
             var statistics = await _customerService.GetCustomerStatisticsAsync();
             return Ok(statistics);
         }
+
+
+        //[HttpGet("statistics")]
+        //public async Task<ActionResult<CustomerStatisticsDto>> GetCustomerStatistics()
+        //{
+        //    var statistics = await _customerService.GetCustomerStatisticsAsync();
+        //    return Ok(statistics);
+        //}
     }
 } 
