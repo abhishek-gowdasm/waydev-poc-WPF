@@ -95,4 +95,6 @@ namespace OrderManagementSystem.DTOs
         public string CategoryName { get; set; } = string.Empty;
         public int ProductCount { get; set; }
     }
+
+    //Dashboard dto changes for waydev
 } 
