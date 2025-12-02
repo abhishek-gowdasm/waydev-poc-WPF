@@ -97,5 +97,9 @@ namespace OrderManagementSystem.Controllers
                 });
             }
         }
+        //for waydev 
+        //status = "database_error",
+        //            error = ex.Message,
+        //            stackTrace = ex.StackTrace
     }
 } 
