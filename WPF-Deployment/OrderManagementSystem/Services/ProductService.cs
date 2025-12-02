@@ -17,6 +17,7 @@ namespace OrderManagementSystem.Services
             _mapper = mapper;
         }
 
+        // Retrieve all products with related data and computed fields
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {
             var products = await _unitOfWork.Repository<Product>()

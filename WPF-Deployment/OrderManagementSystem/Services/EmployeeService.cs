@@ -17,6 +17,7 @@ namespace OrderManagementSystem.Services
             _mapper = mapper;
         }
 
+        //Get all employees with their manager names, order counts, and total sales
         public async Task<IEnumerable<EmployeeDto>> GetAllEmployeesAsync()
         {
             var employees = await _unitOfWork.Repository<Employee>()
