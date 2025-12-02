@@ -16,6 +16,9 @@ namespace OrderManagementSystem.Controllers
     /// </remarks>
     [ApiController]
     [Route("api/[controller]")]
+    /// <summary>
+    /// Handles customer-related API operations.
+    /// </summary>
     public class CustomersController : ControllerBase
     {
         // Service that contains business logic for customers. Injected via DI.
