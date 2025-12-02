@@ -221,5 +221,7 @@ namespace OrderManagementSystem.Controllers
             var statistics = await _customerService.GetCustomerStatisticsAsync();
             return Ok(statistics);
         }
+        // Delegate the computation of statistics to the service so that the controller
+        // remains focused on HTTP concerns and not aggregation logic.
     }
 }
