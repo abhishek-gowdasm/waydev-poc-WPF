@@ -52,4 +52,5 @@ namespace OrderManagementSystem.DTOs
         public decimal TotalInventoryValue { get; set; }
         public decimal AverageUnitPrice { get; set; }
     }
+    //product dto are changed for waydev
 } 
