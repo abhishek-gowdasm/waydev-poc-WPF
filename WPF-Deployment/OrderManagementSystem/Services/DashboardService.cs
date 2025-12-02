@@ -17,6 +17,7 @@ namespace OrderManagementSystem.Services
             _mapper = mapper;
         }
 
+        //Get dashboard data
         public async Task<DashboardDto> GetDashboardDataAsync()
         {
             try
