@@ -6,6 +6,10 @@ namespace OrderManagementSystem.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+
+    /// <summary>
+    /// Handles API requests related to dashboard operations such as monthly data
+    /// </summary>
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _dashboardService;
