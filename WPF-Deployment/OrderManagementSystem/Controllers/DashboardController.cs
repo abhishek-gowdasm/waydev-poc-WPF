@@ -8,7 +8,8 @@ namespace OrderManagementSystem.Controllers
     [Route("api/[controller]")]
 
     /// <summary>
-    /// Handles API requests related to dashboard operations such as monthly data
+    /// Handles API requests related to dashboard operations such as summary data,
+    /// analytics, charts, or quick statistics.
     /// </summary>
     public class DashboardController : ControllerBase
     {
