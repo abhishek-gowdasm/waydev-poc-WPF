@@ -13,5 +13,6 @@ namespace OrderManagementSystem.Interfaces
         Task<CustomerDto> UpdateCustomerAsync(string id, UpdateCustomerDto updateCustomerDto);
         Task<bool> DeleteCustomerAsync(string id);
         Task<CustomerStatisticsDto> GetCustomerStatisticsAsync();
+        //customer interface are maodified dummy commits
     }
 } 
