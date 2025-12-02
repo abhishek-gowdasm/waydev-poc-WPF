@@ -6,6 +6,9 @@ namespace OrderManagementSystem.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    /// <summary>
+    /// Handles customer-related API operations.
+    /// </summary>
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
